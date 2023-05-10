@@ -42,8 +42,8 @@ class TrackingPlugin {
             if (app()->bound('sentry')) {
                 app('sentry')->captureException($ex);
             }
-            
-            \Log::debug('TrackingRawService error: '.$ex->getMessage());
+
+            \Log::debug('TrackingPlugin error: '.$ex->getMessage());
         }
     }
 
