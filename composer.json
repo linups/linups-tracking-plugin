@@ -1,0 +1,28 @@
+{
+    "name": "linups/linups-tracking-plugin",
+    "description": "Tracking for personal projects",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Linups",
+            "email": "linas@hardrokas.net"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Linups\\TrackingPlugin\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Linups\\TrackingPlugin\\TrackingPluginServiceProvider"
+            ],
+            "aliases": {
+                "Calculator": "Linups\\TrackingPlugin\\TrackingPlugin"
+            }
+        }
+    }
+}
