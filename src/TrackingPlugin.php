@@ -29,14 +29,24 @@ class TrackingPlugin {
     public function submit():void {
         try {
             $this->gatherAdditionalData();
-            Http::post(config('tracking-plugin-config.tracking_raw_endpoint').'/api/v1/tracking-raw',
+            $responseRaw = Http::post(config('tracking-plugin-config.tracking_raw_endpoint').'/api/v1/tracking-raw',
                 $this->postData
             );
+
+            $response = json_decode($responseRaw->getBody()->getContents());
 
             //--- Temporary for testing
             Http::post('https://tracking.thewatkinsmethod.com/api/v1/tracking-raw',
                 $this->postData
             );
+
+            if(!isset($response->status) || (isset($response) && $response->status != 'success')) {
+                throw new \Exception('<pre>'.print_r([
+                        'error' => 'Tracking API not saved',
+                        'postData' => $this->postData,
+                        'response' => $response,
+                    ], true).'</pre>');
+            }
 
         } catch (\Throwable $ex) {
             if (app()->bound('sentry')) {
