@@ -10,8 +10,9 @@ class TrackingPlugin {
         $this->postData['project_id'] = config('tracking-plugin-config.tracking_project_id');
     }
 
-    public function setProject(int $projectID):void {
+    public function setProject(int $projectID) {
         $this->postData['project_id'] = $projectID;
+        return $this;
     }
 
     public function action(string $type, array $actionData = null) {
