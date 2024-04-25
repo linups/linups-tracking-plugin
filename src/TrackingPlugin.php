@@ -34,14 +34,15 @@ class TrackingPlugin {
     public function submit():void {
         try {
             $this->gatherAdditionalData();
-            $responseRaw = Http::post(config('tracking-plugin-config.tracking_raw_endpoint').'/api/v1/tracking-raw',
-                $this->postData
-            );
+            $responseRaw = Http::withoutVerifying()
+                ->post(config('tracking-plugin-config.tracking_raw_endpoint').'/api/v1/tracking-raw',
+                    $this->postData
+                );
 
             $response = json_decode($responseRaw->getBody()->getContents());
 
             //--- Temporary for testing
-            Http::post('https://tracking.thewatkinsmethod.com/api/v1/tracking-raw',
+            Http::async()->post(config('tracking-plugin-config.testing_raw_endpoint').'/api/v1/tracking-raw',
                 $this->postData
             );
 
